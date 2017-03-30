@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import StoryCard from './StoryCard';
 import { fetchList } from '../Actions/Actions';
 
-class NewsList extends React.Component {
+class List extends React.Component {
   render() {
     return (
       <div>
@@ -61,4 +61,4 @@ function convertTimestamp(timestamp) {
 	return time;
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewsList);
+export default connect(mapStateToProps, mapDispatchToProps)(List);

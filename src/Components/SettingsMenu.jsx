@@ -5,33 +5,42 @@ import { changeSize } from '../Actions/Actions';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
-import Search from 'material-ui/svg-icons/action/search';
 import Settings from 'material-ui/svg-icons/action/settings';
-import FlatButton from 'material-ui/FlatButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 class SettingsMenu extends React.Component{
-  handleResize = (size) => {
-    this.props.changeSize(size);
+  handleResize = (e, item) => {
+    this.props.changeSize(item.props.value);
   }
   render(){
+    const nestedMenuItems = [{
+      primaryText: '6',
+      value: 6,
+    }, {
+      primaryText: '12',
+      value: 12
+    }, {
+      primaryText: '24',
+      value: 24
+    }];
     return(
       <IconMenu
          className='settings-menu'
          iconButtonElement={<IconButton><Settings/></IconButton>}
+         iconStyle={{color: 'white'}}
          anchorOrigin={{horizontal: 'left', vertical: 'top'}}
          targetOrigin={{horizontal: 'left', vertical: 'top'}}
        >
          <MenuItem primaryText="Size"
                    rightIcon={<ArrowDropRight />}
-                   menuItems={[
-                     <MenuItem primaryText="12" onClick={this.handleResize(6)}/>,
-                     <MenuItem primaryText="12" onClick={this.handleResize(12)}/>,
-                     <MenuItem primaryText="24" onClick={this.handleResize(24)}/>
-                   ]}
+                   menuItems={nestedMenuItems.map(menuItem => (
+                     <MenuItem
+                       {...menuItem}
+                       onTouchTap={event => this.handleResize(event, { props: {...menuItem} })}
+                       />
+                   ))}
          />
        </IconMenu>
     )

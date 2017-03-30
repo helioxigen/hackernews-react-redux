@@ -13,7 +13,7 @@ export default class StoryCard extends React.Component{
         />
         <CardActions>
           <FlatButton label="Go To URL" href={this.props.url}/>
-          <FlatButton label="Show Comments" on />
+          <FlatButton label="Show Comments" />
         </CardActions>
 
       </Card>

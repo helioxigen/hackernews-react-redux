@@ -1,4 +1,4 @@
-import { UPDATE_LIST, CHANGE_TAB, CHANGE_SIZE } from './constansts';
+import { UPDATE_LIST, CHANGE_TAB, CHANGE_SIZE, CHANGE_PAGE } from './constansts';
 
 import axios from 'axios';
 import { Map } from 'immutable';
@@ -9,6 +9,8 @@ export const updateList = data => ({type: UPDATE_LIST, data});
 export const changeTab = tab => ({type: CHANGE_TAB, tab});
 
 export const changeSize = size => ({type: CHANGE_SIZE, size})
+
+export const changePage = page => ({type: CHANGE_PAGE, page})
 
 export const upgradeDataWithPagination = (data, pageLength, pageNumber) => {
   return (dispatch, getState) => {

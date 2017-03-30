@@ -1,8 +1,10 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 
 import Tabs from './Components/Tabs';
 import List from './Components/List';
 import Appa from './Components/AppBar';
+import Paginatron from './Components/Paginatron';
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 export default class App extends React.Component {
@@ -13,6 +15,7 @@ export default class App extends React.Component {
           <Appa/>
           <Tabs/>
           <List/>
+          <Paginatron/>
         </div>
       </MuiThemeProvider>
     );

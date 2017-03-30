@@ -12,8 +12,7 @@ import { CHANGE_TAB, UPDATE_LIST, CHANGE_SIZE } from './Actions/constansts';
 const initialState = Map({
   list: List([]),
   currentTab: 'new',
-  currentList: 'new',
-  pageLength: '10',
+  pageLength: '6',
   pageNumber: '1',
 })
 

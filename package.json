@@ -6,6 +6,7 @@
     "axios": "^0.15.3",
     "immutable": "^3.8.1",
     "material-ui": "^0.17.1",
+    "material-ui-pagination": "^1.0.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
