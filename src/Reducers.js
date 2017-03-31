@@ -7,7 +7,7 @@ import { Map, List } from 'immutable';
 // Import Action Types
 import {
          CHANGE_TAB, UPDATE_LIST, CHANGE_SIZE,
-         LOADING, CLOSE_COMMENTS, SHOW_COMMENTS
+         LOADING, CLOSE_COMMENTS, OPEN_COMMENTS
        } from './Actions/constansts';
 
 
@@ -55,6 +55,11 @@ function hackerNewsApp(state = initialState, action) {
     case CLOSE_COMMENTS:
       return state.merge({
         showComments: false,
+        commentsList: List([])
+      })
+    case OPEN_COMMENTS:
+      return state.merge({
+        showComments: true,
         commentsList: List([])
       })
     default:

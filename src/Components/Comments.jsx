@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { toggleComments } from '../Actions/Actions'
+import { closeComments } from '../Actions/Actions'
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -18,7 +18,7 @@ class Comments extends React.Component{
           title="Comments"
           modal={false}
           open={this.props.showComments}
-          onRequestClose={this.handleClose}
+          onRequestClose={this.props.closeComments}
           autoScrollBodyContent={true}
           >
         </Dialog>
@@ -35,7 +35,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return{
-    toggleComments: () => dispatch(toggleComments())
+    closeComments: () => dispatch(closeComments())
   }
 }
 
