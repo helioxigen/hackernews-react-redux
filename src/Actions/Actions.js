@@ -1,18 +1,24 @@
-import { UPDATE_LIST, CHANGE_TAB, CHANGE_SIZE, CHANGE_PAGE, LOADING } from './constansts';
+import {
+        UPDATE_LIST, CHANGE_TAB, CHANGE_SIZE,
+        CHANGE_PAGE, LOADING, OPEN_COMMENTS,
+        CLOSE_COMMENTS
+      } from './constansts';
 
 import axios from 'axios';
-import { Map } from 'immutable';
-
 
 export const updateList = data => ({type: UPDATE_LIST, data});
 
 export const changeTab = tab => ({type: CHANGE_TAB, tab});
 
-export const changeSize = size => ({type: CHANGE_SIZE, size})
+export const changeSize = size => ({type: CHANGE_SIZE, size});
 
-export const changePage = page => ({type: CHANGE_PAGE, page})
+export const changePage = page => ({type: CHANGE_PAGE, page});
 
-export const loading = boolean => ({type: LOADING, boolean})
+export const loading = bool => ({type: LOADING, bool});
+
+export const openComments = id => ({type: OPEN_COMMENTS, id});
+
+export const closeComments = () => ({type: CLOSE_COMMENTS});
 
 export const upgradeDataWithPagination = (data) => {
   return (dispatch, getState) => {

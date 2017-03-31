@@ -3,6 +3,7 @@ import React from 'react';
 import Tabs from './Components/Tabs';
 import List from './Components/List';
 import Appa from './Components/AppBar';
+import Comments from './Components/Comments';
 import Paginatron from './Components/Paginatron';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -16,6 +17,7 @@ export default class App extends React.Component {
           <Tabs/>
           <List/>
           <Paginatron/>
+          <Comments/>
         </div>
       </MuiThemeProvider>
     );

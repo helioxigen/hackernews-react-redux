@@ -5,15 +5,20 @@ import { Map, List } from 'immutable';
 
 
 // Import Action Types
-import { CHANGE_TAB, UPDATE_LIST, CHANGE_SIZE, LOADING } from './Actions/constansts';
+import {
+         CHANGE_TAB, UPDATE_LIST, CHANGE_SIZE,
+         LOADING, CLOSE_COMMENTS, SHOW_COMMENTS
+       } from './Actions/constansts';
 
 
 const initialState = Map({
   list: List([]),
+  commentsList: List([]),
   currentTab: 'new',
   pageLength: '6',
   pageNumber: '1',
-  loading: true
+  loading: true,
+  showComments: false
 })
 
 function hackerNewsApp(state = initialState, action) {
@@ -47,6 +52,11 @@ function hackerNewsApp(state = initialState, action) {
       return state.update('loading',
         boolean => action.boolean
       )
+    case CLOSE_COMMENTS:
+      return state.merge({
+        showComments: false,
+        commentsList: List([])
+      })
     default:
       return state;
   }
