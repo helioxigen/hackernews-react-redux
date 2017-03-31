@@ -2,11 +2,10 @@
  *  hackerNewsApp reducer
  */
 import { Map, List } from 'immutable';
-import axios from 'axios';
 
 
 // Import Action Types
-import { CHANGE_TAB, UPDATE_LIST, CHANGE_SIZE } from './Actions/constansts';
+import { CHANGE_TAB, UPDATE_LIST, CHANGE_SIZE, LOADING } from './Actions/constansts';
 
 
 const initialState = Map({
@@ -14,6 +13,7 @@ const initialState = Map({
   currentTab: 'new',
   pageLength: '6',
   pageNumber: '1',
+  loading: true
 })
 
 function hackerNewsApp(state = initialState, action) {
@@ -43,6 +43,10 @@ function hackerNewsApp(state = initialState, action) {
         list: List([]),
         pageLength: action.size
       })
+    case LOADING:
+      return state.update('loading',
+        boolean => action.boolean
+      )
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-import { UPDATE_LIST, CHANGE_TAB, CHANGE_SIZE, CHANGE_PAGE } from './constansts';
+import { UPDATE_LIST, CHANGE_TAB, CHANGE_SIZE, CHANGE_PAGE, LOADING } from './constansts';
 
 import axios from 'axios';
 import { Map } from 'immutable';
@@ -12,7 +12,9 @@ export const changeSize = size => ({type: CHANGE_SIZE, size})
 
 export const changePage = page => ({type: CHANGE_PAGE, page})
 
-export const upgradeDataWithPagination = (data, pageLength, pageNumber) => {
+export const loading = boolean => ({type: LOADING, boolean})
+
+export const upgradeDataWithPagination = (data) => {
   return (dispatch, getState) => {
     let pageNumber = getState().get('pageNumber');
     let pageLength = getState().get('pageLength');
@@ -25,6 +27,7 @@ export const upgradeDataWithPagination = (data, pageLength, pageNumber) => {
       axios.get(`https://hacker-news.firebaseio.com/v0/item/${currentItem}.json`)
            .then(response => response.data)
            .then(result => dispatch(updateList(result)))
+           .then(result => dispatch(loading(false)))
     }
   }
 };
@@ -34,5 +37,6 @@ export const fetchList = (tabName) => {
     return axios.get(`https://hacker-news.firebaseio.com/v0/${tabName}stories.json`)
                 .then(response => response.data)
                 .then(result => dispatch(upgradeDataWithPagination(result)))
+                .then(result => dispatch(loading(true)))
   }
 };

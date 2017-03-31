@@ -3,6 +3,8 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import { Map } from 'immutable';
 import { connect } from 'react-redux';
 
+import Loader from './Loader';
+
 import { changeTab, fetchList } from '../Actions/Actions';
 
 class SwitchTabs extends React.Component {
@@ -16,14 +18,18 @@ class SwitchTabs extends React.Component {
   }
   render() {
     return (
-      <Tabs className='tabs'
-            value={this.props.currentTab}
-            onChange={this.handleChange}
-      >
-        <Tab label="Top" value="top"/>
-        <Tab label="New" value="new"/>
-        <Tab label="Comments" value="comments"/>
-      </Tabs>
+      <div>
+        <Tabs className='tabs'
+              value={this.props.currentTab}
+              onChange={this.handleChange}
+        >
+          <Tab label="Top" value="top"/>
+          <Tab label="New" value="new"/>
+          <Tab label="Comments" value="comments"/>
+        </Tabs>
+        <Loader/>
+      </div>
+
     );
   }
 }

@@ -22,3 +22,16 @@
 .menuitem{
   color: rgba(0, 0, 0, 0.74)!important;
 }
+
+.pagination{
+  margin: 0 auto;
+  ;
+}
+
+.progress{
+  position: relative;;
+}
+
+.loaded{
+  display: none;
+}

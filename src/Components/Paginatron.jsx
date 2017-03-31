@@ -6,14 +6,19 @@ import { changePage } from '../Actions/Actions';
 import Pagination from 'material-ui-pagination';
 
 class Paginatron extends React.Component {
+  changePage = (page) => {
+    this.props.changePage(page);
+  }
   render() {
     return (
-      <Pagination
-        total='5'
-        display='5'
-        current={this.props.pageNumber}
-        onChange={this.changePage}
-      />
+      <div className='pagination'>
+        <Pagination
+          total='50'
+          display='10'
+          current={this.props.pageNumber}
+          onChange={this.changePage}
+        />
+      </div>
     );
   }
 }

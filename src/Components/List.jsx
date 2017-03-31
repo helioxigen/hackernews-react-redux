@@ -7,7 +7,7 @@ import { fetchList } from '../Actions/Actions';
 class List extends React.Component {
   render() {
     return (
-      <div>
+      <div className='list'>
         {this.props.list.map( story =>{
           let time = convertTimestamp(story.get('time'));
           return <StoryCard key={story.get('id')}
