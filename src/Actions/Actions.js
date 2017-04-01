@@ -5,6 +5,7 @@ import {
       } from './constansts';
 
 import axios from 'axios';
+import { Map, List } from 'immutable';
 
 export const updateList = data => ({type: UPDATE_LIST, list});
 
@@ -22,26 +23,33 @@ export const closeComments = () => ({type: CLOSE_COMMENTS});
 
 export const upgradeDataWithPagination = (data) => {
   return (dispatch, getState) => {
-    let pageNumber = getState().get('pageNumber');
-    let pageLength = getState().get('pageLength');
+    const pageNumber = getState().get('pageNumber');
+    const pageLength = getState().get('pageLength');
     let promises = [];
-    let list = [];
 
-    let range = {
+    const range = {
       min: (pageNumber-1)*pageLength,
       max: pageNumber*pageLength
     };
+
     for (let i = range.min; i < range.max; i++) {
       let currentItem = data[i];
       promises.push(axios.get(`https://hacker-news.firebaseio.com/v0/item/${currentItem}.json`))
     }
 
-    axios.all(promises).then(results => {
-      results.map( result => {
-        list.push(result.data)
-      })).then(dispatch(updateList(list)))
-    })
-    }
+    axios.all(promises).then(results =>
+      List(results).map( item => Map({
+        by: item.by,
+        descendants: item.descendants,
+        id: item.id,
+        kids: List(item.kids),
+        score: item.score,
+        time: item.time,
+        title: item.title,
+        type: item.type,
+        url: item.url
+      }))).then( list => dispatch(updateList(list)))
+          .then(dispatch(loading(false)))
   }
 };
 
