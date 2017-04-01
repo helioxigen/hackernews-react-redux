@@ -6,7 +6,7 @@ import {
 
 import axios from 'axios';
 
-export const updateList = data => ({type: UPDATE_LIST, data});
+export const updateList = data => ({type: UPDATE_LIST, list});
 
 export const changeTab = tab => ({type: CHANGE_TAB, tab});
 
@@ -24,16 +24,23 @@ export const upgradeDataWithPagination = (data) => {
   return (dispatch, getState) => {
     let pageNumber = getState().get('pageNumber');
     let pageLength = getState().get('pageLength');
+    let promises = [];
+    let list = [];
+
     let range = {
       min: (pageNumber-1)*pageLength,
       max: pageNumber*pageLength
     };
     for (let i = range.min; i < range.max; i++) {
       let currentItem = data[i];
-      axios.get(`https://hacker-news.firebaseio.com/v0/item/${currentItem}.json`)
-           .then(response => response.data)
-           .then(result => dispatch(updateList(result)))
-           .then(result => dispatch(loading(false)))
+      promises.push(axios.get(`https://hacker-news.firebaseio.com/v0/item/${currentItem}.json`))
+    }
+
+    axios.all(promises).then(results => {
+      results.map( result => {
+        list.push(result.data)
+      })).then(dispatch(updateList(list)))
+    })
     }
   }
 };

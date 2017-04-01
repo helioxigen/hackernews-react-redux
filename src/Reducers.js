@@ -25,18 +25,21 @@ function hackerNewsApp(state = initialState, action) {
   switch (action.type) {
     case UPDATE_LIST:
       return state.update('list', list => {
-        let d = action.data;
-        return list.push(Map({
-          by: d.by,
-          descendants: d.descendants,
-          id: d.id,
-          kids: List([d.kids]),
-          score: d.score,
-          time: d.time,
-          title: d.title,
-          type: d.story,
-          url: d.url
-        }))
+        let listOfItems = action.list;
+        listOfItems.map( d => {
+          list.push(Map({
+            by: d.by,
+            descendants: d.descendants,
+            id: d.id,
+            kids: List([d.kids]),
+            score: d.score,
+            time: d.time,
+            title: d.title,
+            type: d.story,
+            url: d.url
+          }))
+        })
+        return list;
       })
     case CHANGE_TAB:
       return state.merge({
