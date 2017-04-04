@@ -14,7 +14,7 @@ class SwitchTabs extends React.Component {
     fetchList(props.currentTab);
   }
   handleChange = (value) => {
-    changeTab(value);
+    // changeTab(value);
     fetchList(value);
   }
   render() {
