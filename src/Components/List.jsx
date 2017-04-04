@@ -22,10 +22,10 @@ class List extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapState(state) {
   return {
     list: state.get('list')
   }
 }
 
-export default connect(mapStateToProps)(List);
+export default connect(mapState)(List);

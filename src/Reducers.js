@@ -3,12 +3,9 @@
  */
 import { Map, List } from 'immutable';
 
+import { createReducer } from 'redux-act';
 
-import {
-         CHANGE_TAB, UPDATE_LIST, CHANGE_SIZE,
-         LOADING, CLOSE_COMMENTS, OPEN_COMMENTS,
-         UPDATE_COMMENTS, LOAD_COMM
-       } from './Actions/constansts';
+import * as actions from './Actions/Actions';
 
 
 const initialState = Map({
@@ -23,49 +20,23 @@ const initialState = Map({
   showComments: false
 })
 
-function hackerNewsApp(state = initialState, action) {
-  switch (action.type) {
-    case UPDATE_LIST:
-      return state.merge({
-        list: action.list,
-        loading: false
-      })
+const hackApp = createReducer({
+  [actions.updateList]:     (state, list) => state.merge({
+    list: list,
+    loading: false
+  }),
+  [actions.openComments]:   (state, kids) => state.merge({
+    showComments: true,
+    storyKids: kids
+  }),
+  [actions.updateComments]: (state, list) => state.merge({
+    loadingComments: false,
+    commentsList: list
+  }),
+  [actions.loadingComments]: (state)  => state.update('loadingComments', true),
+  [actions.changeTab]:  (state, tab)  => state.update('currentTab', tab),
+  [actions.changeSize]: (state, size) => state.update('pageLength', size),
+  // [actions.loading]:    (state)       => state.update('loading', true)
+}, initialState);
 
-    case CHANGE_TAB:
-      return state.merge({
-        list: List([]),
-        currentTab: action.tab
-      })
-
-    case CHANGE_SIZE:
-      return state.merge({
-        list: List([]),
-        pageLength: action.size
-      })
-
-    case LOADING:
-      return state.update('loading', bool => action.bool)
-
-    case CLOSE_COMMENTS:
-      return state.merge({
-        showComments: false,
-        commentsList: List([])
-      })
-
-    case OPEN_COMMENTS:
-      return state.merge({
-        showComments: true,
-        storyKids: action.kids
-      })
-
-    case UPDATE_COMMENTS:
-      return state.merge({
-        commentsList: action.list,
-        loadingComments: false
-      })
-    default:
-      return state;
-  }
-}
-
-export default hackerNewsApp;
+export default hackApp;
