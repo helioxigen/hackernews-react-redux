@@ -7,7 +7,7 @@ import {
 import axios from 'axios';
 import { Map, List } from 'immutable';
 
-export const updateList = data => ({type: UPDATE_LIST, list});
+export const updateList = list => ({type: UPDATE_LIST, list});
 
 export const changeTab = tab => ({type: CHANGE_TAB, tab});
 
@@ -38,18 +38,21 @@ export const upgradeDataWithPagination = (data) => {
     }
 
     axios.all(promises).then(results =>
-      List(results).map( item => Map({
-        by: item.by,
-        descendants: item.descendants,
-        id: item.id,
-        kids: List(item.kids),
-        score: item.score,
-        time: item.time,
-        title: item.title,
-        type: item.type,
-        url: item.url
-      }))).then( list => dispatch(updateList(list)))
-          .then(dispatch(loading(false)))
+      List(results).map( result => {
+        let item = result.data;
+        return Map({
+          by: item.by,
+          descendants: item.descendants,
+          id: item.id,
+          kids: List(item.kids),
+          score: item.score,
+          time: item.time,
+          title: item.title,
+          type: item.type,
+          url: item.url
+        })
+      })).then(list => dispatch(updateList(list)))
+         .then(res => dispatch(loading(false)))
   }
 };
 
