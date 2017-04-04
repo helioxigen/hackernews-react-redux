@@ -5,3 +5,5 @@ export const CHANGE_PAGE = 'CHANGE_PAGE';
 export const LOADING = 'LOADING';
 export const CLOSE_COMMENTS = 'CLOSE_COMMENTS';
 export const OPEN_COMMENTS = 'OPEN_COMMENTS';
+export const LOAD_COMM = 'LOAD_COMM';
+export const UPDATE_COMMENTS = 'UPDATE_COMMENTS';

@@ -1,7 +1,7 @@
 import {
         UPDATE_LIST, CHANGE_TAB, CHANGE_SIZE,
         CHANGE_PAGE, LOADING, OPEN_COMMENTS,
-        CLOSE_COMMENTS
+        CLOSE_COMMENTS, LOAD_COMM, UPDATE_COMMENTS
       } from './constansts';
 
 import axios from 'axios';
@@ -17,7 +17,11 @@ export const changePage = page => ({type: CHANGE_PAGE, page});
 
 export const loading = bool => ({type: LOADING, bool});
 
-export const openComments = id => ({type: OPEN_COMMENTS, id});
+export const loadingComments = bool => ({type: LOAD_COMM, bool})
+
+export const openComments = kids => ({type: OPEN_COMMENTS, kids});
+
+export const updateComments = list => ({type: UPDATE_COMMENTS, list})
 
 export const closeComments = () => ({type: CLOSE_COMMENTS});
 
@@ -44,7 +48,7 @@ export const upgradeDataWithPagination = (data) => {
           by: item.by,
           descendants: item.descendants,
           id: item.id,
-          kids: List(item.kids),
+          kids: item.kids,
           score: item.score,
           time: item.time,
           title: item.title,
@@ -64,3 +68,30 @@ export const fetchList = (tabName) => {
                 .then(result => dispatch(loading(true)))
   }
 };
+
+export const fetchComments = () => {
+  return (dispatch, getState) => {
+    let kids = getState().get('storyKids').toArray();
+    let promises = [];
+
+    for (let i = 0; i < kids.length; i++) {
+      let kid = kids[i];
+      promises.push(axios.get(`https://hacker-news.firebaseio.com/v0/item/${kid}.json`));
+    }
+
+    axios.all(promises).then( kids =>
+    List(kids).map( result => {
+      let comment = result.data;
+      return Map({
+        by: comment.by,
+        id: comment.id,
+        kids: comment.kids,
+        parent: comment.parent,
+        text: comment.text,
+        time: comment.time,
+        type: comment.type
+      })
+    })).then( commentList => dispatch(updateComments(commentList)))
+       .then( res => dispatch(loadingComments(false)))
+  }
+}

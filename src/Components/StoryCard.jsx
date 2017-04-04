@@ -7,7 +7,7 @@ import { openComments } from '../Actions/Actions';
 
 class StoryCard extends React.Component{
   handleOpen = () => {
-    this.props.openComments(this.props.id);
+    this.props.openComments(this.props.kids);
   }
   render(){
     let time = convertTimestamp(this.props.time);
@@ -20,7 +20,9 @@ class StoryCard extends React.Component{
         />
         <CardActions>
           <FlatButton label="Go To URL" href={this.props.url}/>
-          <FlatButton label="Show Comments" onClick={this.handleOpen}/>
+          {this.props.kids ?
+            <FlatButton label="Show Comments" onClick={this.handleOpen}/> :
+            <FlatButton disabled label='No Comments'/>}
         </CardActions>
 
       </Card>

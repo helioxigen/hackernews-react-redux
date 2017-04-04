@@ -25,7 +25,7 @@ class SwitchTabs extends React.Component {
         >
           <Tab label="Top" value="top"/>
           <Tab label="New" value="new"/>
-          <Tab label="Comments" value="comments"/>
+          <Tab label="Ask" value="ask"/>
         </Tabs>
         <Loader/>
       </div>
