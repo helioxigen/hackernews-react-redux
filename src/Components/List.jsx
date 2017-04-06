@@ -1,9 +1,8 @@
 import React, {PropTypes} from 'react';
-import { connect } from 'react-redux';
 
-import StoryCard from './StoryCard';
+import StoryCard from '../Containers/StoryCard';
 
-class List extends React.Component {
+export default class List extends React.Component {
   render() {
     return (
       <div className='list'>
@@ -21,11 +20,3 @@ class List extends React.Component {
     );
   }
 }
-
-function mapState(state) {
-  return {
-    list: state.get('storyList')
-  }
-}
-
-export default connect(mapState)(List);

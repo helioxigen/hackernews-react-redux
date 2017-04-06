@@ -11,8 +11,8 @@ import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
 class SettingsMenu extends React.Component{
   handleResize = (e, item) => {
-    this.props.changeSize(item.props.value);
-    this.props.fetchList(this.props.currentTab);
+    changeSize(item.props.value);
+    fetchList(this.props.currentTab);
   }
   render(){
     const nestedMenuItems = [{
@@ -47,17 +47,10 @@ class SettingsMenu extends React.Component{
   }
 }
 
-function mapDispatchToProps(dispatch){
-  return{
-    changeSize: size => dispatch(changeSize(size)),
-    fetchList: list => dispatch(fetchList(list))
-  }
-}
-
 function mapStateToProps(state){
   return{
     currentTab: state.get('currentTab')
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsMenu)
+export default connect(mapStateToProps)(SettingsMenu)

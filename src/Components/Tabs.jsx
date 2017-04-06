@@ -5,24 +5,13 @@ import { connect } from 'react-redux';
 
 import Loader from './Loader';
 
-import { changeTab } from '../Actions/Actions';
-import { fetchList } from '../Actions/fetchActions';
-
-class SwitchTabs extends React.Component {
-  constructor(props){
-    super(props)
-    fetchList(props.currentTab);
-  }
-  handleChange = (value) => {
-    changeTab(value);
-    fetchList(value);
-  }
+export default class SwitchTabs extends React.Component {
   render() {
     return (
       <div>
         <Tabs className='tabs'
-              value={this.props.currentTab}
-              onChange={this.handleChange}
+              value={this.props.tab}
+              onChange={this.props.onTabChange}
         >
           <Tab label="Top" value="top"/>
           <Tab label="New" value="new"/>
@@ -34,18 +23,3 @@ class SwitchTabs extends React.Component {
     );
   }
 }
-
-function mapStateToProps(state){
-  return{
-    currentTab: state.get('currentTab')
-  }
-}
-
-// function mapDispatchToProps(dispatch){
-//   return{
-//     fetchList: list => dispatch(fetchList(list))
-//   }
-// }
-
-
-export default connect(mapStateToProps)(SwitchTabs)

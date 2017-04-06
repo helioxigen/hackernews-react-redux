@@ -14,10 +14,12 @@ const initialState = Map({
   currentTab: 'new',
   pageLength: '6',
   pageNumber: '1',
+  toggleSearch: false,
   loadingStories: true,
   loadingComments: true,
   storyKids: 0,
-  showComments: false
+  showComments: false,
+  searchMode: false
 })
 
 const hackApp = createReducer({
@@ -33,11 +35,20 @@ const hackApp = createReducer({
     loadingComments: false,
     commentsList: payload.list
   }),
+  [actions.closeComments]:  (state) => state.merge({
+    showComments: false,
+    commentsList: []
+  }),
+  [actions.searchMode]:     (state, payload) => state.merge({
+      searchMode: payload.bool,
+      currentTab: -1
+  }),
   [actions.loadingComments]: (state)  => state.update('loadingComments', bool => true),
-  [actions.closeComments]:   (state) => state.update('showComments', bool => !bool),
-  [actions.changeTab]:  (state, payload)  => state.update('currentTab', val => payload.tab),
-  [actions.changeSize]: (state, size) => state.update('pageLength', size => size),
-  [actions.loading]:    (state)       => state.update('loading', bool => true)
+  [actions.changePage]:   (state, payload) => state.update('pageNumber', page => parseInt(page)+payload.page), 
+  [actions.changeTab]:    (state, payload) => state.update('currentTab', val => payload.tab),
+  [actions.changeSize]:   (state, payload) => state.update('pageLength', size => payload.size),
+  [actions.loading]:      (state)       => state.update('loading', bool => true),
+  [actions.toggleSearch]: (state)       => state.update('toggleSearch', bool => !bool),
 }, initialState);
 
 export default hackApp;

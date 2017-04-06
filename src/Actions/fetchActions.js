@@ -1,8 +1,18 @@
 import axios from 'axios';
-import { Map, List } from 'immutable';
-import { updateList, updateComments, loading, loadingComments} from './Actions';
+import { updateList, updateComments, loading, loadingComments, toggleSearch } from './Actions';
 
 import store from '../Store/Store';
+
+export const search = (query) => {
+  // const page = store.getState().get('pageNumber');
+  // const size = store.getState().get('pageLength');
+  const params = `query=${query}`;
+  const url = `http://hn.algolia.com/api/v1/search?${params}`;
+
+  axios.get(url)
+       .then( results => results.data.hits.map( hit => hit.objectID ))
+       .then( results => upgradeDataWithPagination(results))
+}
 
 export const upgradeDataWithPagination = (data) => {
     const pageNumber = store.getState().get('pageNumber');
@@ -47,15 +57,15 @@ export const fetchComments = () => {
     let kids = store.getState().get('storyKids');
     let promises = [];
 
-    for (let i = 0; i < kids.length; i++) {
-      let kid = kids[i];
+    for (let i = 0; i < kids.size; i++) {
+      let kid = kids.get(i);
       promises.push(axios.get(`https://hacker-news.firebaseio.com/v0/item/${kid}.json`));
     }
 
-    axios.all(promises).then( kids =>
-      List(kids).map( result => {
+    axios.all(promises).then( kids => {
+      return kids.map( result => {
         let comment = result.data;
-        return Map({
+        return {
           by: comment.by,
           id: comment.id,
           kids: comment.kids,
@@ -63,7 +73,7 @@ export const fetchComments = () => {
           text: comment.text,
           time: comment.time,
           type: comment.type
-        })
-    })).then( commentList => updateComments(commentList))
-       .then( res => loadingComments(false))
+        }
+      })
+    }).then( commentList => updateComments(commentList))
 }

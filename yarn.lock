@@ -3319,16 +3319,7 @@ marked@^0.3.6:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.6.tgz#b2c6c618fccece4ef86c4fc6cb8a7cbf5aeda8d7"
 
-material-ui-pagination@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/material-ui-pagination/-/material-ui-pagination-1.0.1.tgz#152115b39a8a7c28f89443760f06fb77b9b42dcf"
-  dependencies:
-    material-ui "^0.16.6"
-    react "^15.4.1"
-    react-dom "^15.4.1"
-    react-tap-event-plugin "^2.0.1"
-
-material-ui@^0.16.6:
+material-ui@^0.16.4:
   version "0.16.7"
   resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-0.16.7.tgz#5ec5080d5f227817092c449105df9cbc8807941c"
   dependencies:
@@ -3453,6 +3444,10 @@ minimist@^1.1.1, minimist@^1.2.0:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+moment@^2.18.1:
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
 ms@0.7.1:
   version "0.7.1"
@@ -3717,6 +3712,14 @@ osenv@^0.1.4:
   dependencies:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
+
+pagination-material-ui@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/pagination-material-ui/-/pagination-material-ui-1.0.7.tgz#188d9d772c9f6337baa741e22dc92312db3fefec"
+  dependencies:
+    material-ui "^0.16.4"
+    react "^15.4.1"
+    react-dom "^15.4.1"
 
 pako@~0.2.0:
   version "0.2.9"

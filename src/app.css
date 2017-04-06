@@ -35,3 +35,37 @@
 .loaded{
   display: none;
 }
+
+.commentTitle{
+  font-weight: bold;
+}
+.searchbar{
+  width: 200px;
+  height: 50px;
+  padding: 0px 10px 0px 10px;
+  position: absolute;
+  top: 6px;
+  left: 60px;
+}
+
+.searchtitle{
+  color:  rgba(255, 255, 255, 0.68);;
+}
+
+.searchtitle .return{
+  color: white;
+}
+
+.commentCard{
+  margin: 10px 0px 10px 0px;
+}
+
+.pager{
+  position: absolute;
+  top: 5px;
+  right: 50px;
+}
+
+.pager *{
+  color: white;
+}
