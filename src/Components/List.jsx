@@ -24,7 +24,7 @@ class List extends React.Component {
 
 function mapState(state) {
   return {
-    list: state.get('list')
+    list: state.get('storyList')
   }
 }
 

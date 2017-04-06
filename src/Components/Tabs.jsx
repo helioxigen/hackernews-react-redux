@@ -5,16 +5,17 @@ import { connect } from 'react-redux';
 
 import Loader from './Loader';
 
-import { changeTab, fetchList } from '../Actions/Actions';
+import { changeTab } from '../Actions/Actions';
+import { fetchList } from '../Actions/fetchActions';
 
 class SwitchTabs extends React.Component {
   constructor(props){
     super(props)
-    props.fetchList(props.currentTab);
+    fetchList(props.currentTab);
   }
   handleChange = (value) => {
-    // changeTab(value);
-    // this.props.fetchList(value);
+    changeTab(value);
+    fetchList(value);
   }
   render() {
     return (
@@ -40,11 +41,11 @@ function mapStateToProps(state){
   }
 }
 
-function mapDispatchToProps(dispatch){
-  return{
-    fetchList: list => dispatch(fetchList(list))
-  }
-}
+// function mapDispatchToProps(dispatch){
+//   return{
+//     fetchList: list => dispatch(fetchList(list))
+//   }
+// }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(SwitchTabs)
+export default connect(mapStateToProps)(SwitchTabs)

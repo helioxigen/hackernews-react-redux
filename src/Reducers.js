@@ -9,7 +9,7 @@ import * as actions from './Actions/Actions';
 
 
 const initialState = Map({
-  list: List([]),
+  storyList: [],
   commentsList: List([]),
   currentTab: 'new',
   pageLength: '6',
@@ -21,22 +21,23 @@ const initialState = Map({
 })
 
 const hackApp = createReducer({
-  [actions.updateList]:     (state, list) => state.merge({
-    list: list,
+  [actions.updateList]:     (state, payload) => state.merge({
+    storyList: payload.list,
     loading: false
   }),
-  [actions.openComments]:   (state, kids) => state.merge({
+  [actions.openComments]:   (state, payload) => state.merge({
     showComments: true,
-    storyKids: kids
+    storyKids: payload.kids
   }),
-  [actions.updateComments]: (state, list) => state.merge({
+  [actions.updateComments]: (state, payload) => state.merge({
     loadingComments: false,
-    commentsList: list
+    commentsList: payload.list
   }),
-  [actions.loadingComments]: (state)  => state.update('loadingComments', true),
-  [actions.changeTab]:  (state, tab)  => state.update('currentTab', tab),
-  [actions.changeSize]: (state, size) => state.update('pageLength', size),
-  // [actions.loading]:    (state)       => state.update('loading', true)
+  [actions.loadingComments]: (state)  => state.update('loadingComments', bool => true),
+  [actions.closeComments]:   (state) => state.update('showComments', bool => !bool),
+  [actions.changeTab]:  (state, payload)  => state.update('currentTab', val => payload.tab),
+  [actions.changeSize]: (state, size) => state.update('pageLength', size => size),
+  [actions.loading]:    (state)       => state.update('loading', bool => true)
 }, initialState);
 
 export default hackApp;

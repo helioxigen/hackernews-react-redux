@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { closeComments, fetchComments } from '../Actions/Actions';
+import { closeComments } from '../Actions/Actions';
+import { fetchComments } from '../Actions/fetchActions';
 
 import CommentCard from './CommentCard';
 
@@ -13,10 +14,13 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 class Comments extends React.Component{
   constructor(props){
     super(props);
-    // props.fetchComments(props.storyKids);
+    fetchComments(props.storyKids);
   }
   componentWillReceiveProps = () => {
-    this.props.fetchComments()
+    fetchComments()
+  }
+  handleClose(){
+    closeComments();
   }
   render(){
     return(
@@ -25,7 +29,7 @@ class Comments extends React.Component{
           title="Comments"
           modal={false}
           open={this.props.showComments}
-          onRequestClose={this.props.closeComments}
+          onRequestClose={this.handleClose}
           autoScrollBodyContent={true}
           >
           {this.props.commentsList.map( comment => {
@@ -44,7 +48,7 @@ class Comments extends React.Component{
   }
 }
 
-function mapStateToProps(state) {
+function mapState(state) {
     return{
       showComments: state.get('showComments'),
       storyKids: state.get('storyKids'),
@@ -52,11 +56,4 @@ function mapStateToProps(state) {
     }
 }
 
-function mapDispatchToProps(dispatch) {
-  return{
-    closeComments: () => dispatch(closeComments()),
-    fetchComments: id => dispatch(fetchComments(id))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Comments)
+export default connect(mapState)(Comments)
