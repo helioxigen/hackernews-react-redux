@@ -10,10 +10,9 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import * as actions from './Actions/Actions';
 import hackApp from './Reducers';
 
-const store = createStore(hackApp, compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+export const store = createStore(hackApp, compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
 bindAll(actions, store);
 
 injectTapEventPlugin();
