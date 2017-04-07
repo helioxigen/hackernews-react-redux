@@ -1,7 +1,5 @@
 import React from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import { Map } from 'immutable';
-import { connect } from 'react-redux';
 
 import Loader from './Loader';
 

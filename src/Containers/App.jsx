@@ -17,7 +17,9 @@ class App extends React.Component {
     fetchList(props.currentTab)
   }
   handleTabChange = (tab) => {
-    this.props.searchMode ? searchMode(false) : '';
+    if (this.props.searchMode) {
+      searchMode(false);
+    }
     changeTab(tab);
     fetchList(tab);
   }

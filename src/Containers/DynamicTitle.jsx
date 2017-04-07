@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 
 import Pager from './Pager';
 
-import Paper from 'material-ui/Paper';
-
 class DynamicTitle extends React.Component{
   render(){
     return(

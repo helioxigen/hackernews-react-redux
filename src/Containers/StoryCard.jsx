@@ -1,8 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import moment from 'moment';
 
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
 import { openComments } from '../Actions/Actions';

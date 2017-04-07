@@ -69,3 +69,14 @@
 .pager *{
   color: white;
 }
+
+.loader{
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.loading-comments{
+  position: absolute;
+  top: 3px;
+  left: 140px;
+}

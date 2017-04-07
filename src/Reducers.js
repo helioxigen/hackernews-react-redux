@@ -12,8 +12,8 @@ const initialState = Map({
   storyList: [],
   commentsList: List([]),
   currentTab: 'new',
-  pageLength: '6',
-  pageNumber: '1',
+  pageLength: 6,
+  pageNumber: 1,
   toggleSearch: false,
   loadingStories: true,
   loadingComments: true,
@@ -40,14 +40,17 @@ const hackApp = createReducer({
     commentsList: []
   }),
   [actions.searchMode]:     (state, payload) => state.merge({
-      searchMode: payload.bool,
-      currentTab: -1
+    searchMode: payload.bool,
+    currentTab: -1
   }),
-  [actions.loadingComments]: (state)  => state.update('loadingComments', bool => true),
-  [actions.changePage]:   (state, payload) => state.update('pageNumber', page => parseInt(page)+payload.page), 
-  [actions.changeTab]:    (state, payload) => state.update('currentTab', val => payload.tab),
+  [actions.changeTab]:    (state, payload) => state.merge({
+    currentTab: payload.tab,
+    pageNumber: 1
+  }),
+  [actions.loadingComments]: (state, payload)  => state.update('loadingComments', bool => payload.bool),
+  [actions.changePage]:   (state, payload) => state.update('pageNumber', page => parseInt(page, 10)+payload.page),
   [actions.changeSize]:   (state, payload) => state.update('pageLength', size => payload.size),
-  [actions.loading]:      (state)       => state.update('loading', bool => true),
+  [actions.loading]:      (state, payload) => state.update('loading', bool => payload.bool),
   [actions.toggleSearch]: (state)       => state.update('toggleSearch', bool => !bool),
 }, initialState);
 

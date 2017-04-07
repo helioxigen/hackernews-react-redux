@@ -1,18 +1,7 @@
 import axios from 'axios';
-import { updateList, updateComments, loading, loadingComments, toggleSearch } from './Actions';
+import { updateList, updateComments, loading, loadingComments } from './Actions';
 
 import store from '../Store/Store';
-
-export const search = (query) => {
-  // const page = store.getState().get('pageNumber');
-  // const size = store.getState().get('pageLength');
-  const params = `query=${query}`;
-  const url = `http://hn.algolia.com/api/v1/search?${params}`;
-
-  axios.get(url)
-       .then( results => results.data.hits.map( hit => hit.objectID ))
-       .then( results => upgradeDataWithPagination(results))
-}
 
 export const upgradeDataWithPagination = (data) => {
     const pageNumber = store.getState().get('pageNumber');
@@ -44,16 +33,32 @@ export const upgradeDataWithPagination = (data) => {
           type: item.type,
           url: item.url
         }
-      })).then(list => updateList(list));
+      })).then(list => updateList(list))
+         .then(res => loading(false));
 };
 
+export const search = (query) => {
+  // const page = store.getState().get('pageNumber');
+  // const size = store.getState().get('pageLength');
+  const params = `query=${query}`;
+  const url = `http://hn.algolia.com/api/v1/search?${params}`;
+
+  axios.get(url)
+       .then( results => results.data.hits.map( hit => hit.objectID ))
+       .then( results => upgradeDataWithPagination(results))
+}
+
+
+
 export const fetchList = (tabName) => {
+      loading(true);
       return axios.get(`https://hacker-news.firebaseio.com/v0/${tabName}stories.json`)
                   .then(response => response.data)
                   .then(result => upgradeDataWithPagination(result))
 };
 
 export const fetchComments = () => {
+    loadingComments(true);
     let kids = store.getState().get('storyKids');
     let promises = [];
 
@@ -76,4 +81,5 @@ export const fetchComments = () => {
         }
       })
     }).then( commentList => updateComments(commentList))
+      .then( res => loadingComments(false));
 }
