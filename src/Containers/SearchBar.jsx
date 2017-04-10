@@ -10,14 +10,14 @@ import { toggleSearch, searchMode } from '../Actions/Actions';
 import { search } from '../Actions/fetchActions';
 
 class SearchBar extends React.Component {
-  static handleSearch() {
-    toggleSearch();
-  }
   constructor() {
     super();
     this.state = {
       searchQuery: '',
     };
+  }
+  handleSearch() {
+    toggleSearch();
   }
   handleSearchQuery = (e) => {
     e.preventDefault();

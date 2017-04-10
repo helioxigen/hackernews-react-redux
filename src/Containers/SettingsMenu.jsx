@@ -41,7 +41,7 @@ class SettingsMenu extends React.Component {
               {...menuItem}
               onTouchTap={event => this.handleResize(event, { props: { ...menuItem } })}
             />
-                   ))}
+          ))}
         />
       </IconMenu>
     );

@@ -15,5 +15,6 @@
       1,
       { "ignorePureComponents": true }
     ],
+    "class-methods-use-this": 0,
   }
 }
