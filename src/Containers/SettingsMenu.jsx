@@ -1,56 +1,57 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { changeSize, fetchList } from '../Actions/Actions';
-
 import IconButton from 'material-ui/IconButton';
 import Settings from 'material-ui/svg-icons/action/settings';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
-class SettingsMenu extends React.Component{
+import { changeSize, fetchList } from '../Actions/Actions';
+
+class SettingsMenu extends React.Component {
   handleResize = (e, item) => {
     changeSize(item.props.value);
     fetchList(this.props.currentTab);
   }
-  render(){
+  render() {
     const nestedMenuItems = [{
       primaryText: '6',
       value: 6,
     }, {
       primaryText: '12',
-      value: 12
+      value: 12,
     }, {
       primaryText: '24',
-      value: 24
+      value: 24,
     }];
-    return(
+    return (
       <IconMenu
-         className='settings-menu'
-         iconButtonElement={<IconButton><Settings/></IconButton>}
-         iconStyle={{color: 'white'}}
-         anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-         targetOrigin={{horizontal: 'left', vertical: 'top'}}
-       >
-         <MenuItem primaryText="Size"
-                   rightIcon={<ArrowDropRight />}
-                   menuItems={nestedMenuItems.map(menuItem => (
-                     <MenuItem
-                       {...menuItem}
-                       onTouchTap={event => this.handleResize(event, { props: {...menuItem} })}
-                       />
+        className="settings-menu"
+        iconButtonElement={<IconButton><Settings /></IconButton>}
+        iconStyle={{ color: 'white' }}
+        anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
+        targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+      >
+        <MenuItem
+          primaryText="Size"
+          rightIcon={<ArrowDropRight />}
+          menuItems={nestedMenuItems.map(menuItem => (
+            <MenuItem
+              {...menuItem}
+              onTouchTap={event => this.handleResize(event, { props: { ...menuItem } })}
+            />
                    ))}
-         />
-       </IconMenu>
-    )
+        />
+      </IconMenu>
+    );
   }
 }
 
-function mapStateToProps(state){
-  return{
-    currentTab: state.get('currentTab')
-  }
+function mapStateToProps(state) {
+  return {
+    currentTab: state.get('currentTab'),
+  };
 }
 
-export default connect(mapStateToProps)(SettingsMenu)
+export default connect(mapStateToProps)(SettingsMenu);

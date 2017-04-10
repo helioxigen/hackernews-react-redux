@@ -1,23 +1,23 @@
 import React from 'react';
-import {Tabs, Tab} from 'material-ui/Tabs';
+import { Tabs, Tab } from 'material-ui/Tabs';
 
 import Loader from './Loader';
 
-export default class SwitchTabs extends React.Component {
+export default class SwitchTabs extends React.PureComponent {
   render() {
     return (
       <div>
-        <Tabs className='tabs'
-              value={this.props.tab}
-              onChange={this.props.onTabChange}
+        <Tabs
+          className="tabs"
+          value={this.props.tab}
+          onChange={this.props.onTabChange}
         >
-          <Tab label="Top" value="top"/>
-          <Tab label="New" value="new"/>
-          <Tab label="Ask" value="ask"/>
+          <Tab label="Top" value="top" />
+          <Tab label="New" value="new" />
+          <Tab label="Ask" value="ask" />
         </Tabs>
-        <Loader/>
+        <Loader />
       </div>
-
     );
   }
 }

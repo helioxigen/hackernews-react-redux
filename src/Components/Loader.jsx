@@ -4,22 +4,26 @@ import classNames from 'classnames';
 
 import LinearProgress from 'material-ui/LinearProgress';
 
-class Loader extends React.Component {
+class Loader extends React.PureComponent {
   render() {
     return (
-      <div className={classNames({loader: true,
-                                 'loading': this.props.loading,
-                                 'loaded': !this.props.loading})}>
+      <div
+        className={classNames({
+          loader: true,
+          loading: this.props.loading,
+          loaded: !this.props.loading,
+        })}
+      >
         <LinearProgress mode="indeterminate" />
       </div>
     );
   }
 }
 
-function mapStateToProps(state){
-  return{
-    loading: state.get('loading')
-  }
+function mapStateToProps(state) {
+  return {
+    loading: state.get('loading'),
+  };
 }
 
-export default connect(mapStateToProps)(Loader)
+export default connect(mapStateToProps)(Loader);

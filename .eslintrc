@@ -1,0 +1,19 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "globals": {
+    "document": true,
+    "window": true,
+  },
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "strict": 0,
+    "react/prop-types": 0,
+    "react/prefer-stateless-function": [
+      1,
+      { "ignorePureComponents": true }
+    ],
+  }
+}

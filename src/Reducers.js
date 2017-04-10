@@ -19,39 +19,39 @@ const initialState = Map({
   loadingComments: true,
   storyKids: 0,
   showComments: false,
-  searchMode: false
-})
+  searchMode: false,
+});
 
 const hackApp = createReducer({
-  [actions.updateList]:     (state, payload) => state.merge({
+  [actions.updateList]: (state, payload) => state.merge({
     storyList: payload.list,
-    loading: false
+    loading: false,
   }),
-  [actions.openComments]:   (state, payload) => state.merge({
+  [actions.openComments]: (state, payload) => state.merge({
     showComments: true,
-    storyKids: payload.kids
+    storyKids: payload.kids,
   }),
   [actions.updateComments]: (state, payload) => state.merge({
     loadingComments: false,
-    commentsList: payload.list
+    commentsList: payload.list,
   }),
-  [actions.closeComments]:  (state) => state.merge({
+  [actions.closeComments]: state => state.merge({
     showComments: false,
-    commentsList: []
+    commentsList: [],
   }),
-  [actions.searchMode]:     (state, payload) => state.merge({
+  [actions.searchMode]: (state, payload) => state.merge({
     searchMode: payload.bool,
-    currentTab: -1
+    currentTab: -1,
   }),
-  [actions.changeTab]:    (state, payload) => state.merge({
+  [actions.changeTab]: (state, payload) => state.merge({
     currentTab: payload.tab,
-    pageNumber: 1
+    pageNumber: 1,
   }),
-  [actions.loadingComments]: (state, payload)  => state.update('loadingComments', bool => payload.bool),
-  [actions.changePage]:   (state, payload) => state.update('pageNumber', page => parseInt(page, 10)+payload.page),
-  [actions.changeSize]:   (state, payload) => state.update('pageLength', size => payload.size),
-  [actions.loading]:      (state, payload) => state.update('loading', bool => payload.bool),
-  [actions.toggleSearch]: (state)       => state.update('toggleSearch', bool => !bool),
+  [actions.loadingComments]: (state, payload) => state.update('loadingComments', () => payload.bool),
+  [actions.changePage]: (state, payload) => state.update('pageNumber', page => parseInt(page, 10) + payload.page),
+  [actions.changeSize]: (state, payload) => state.update('pageLength', () => payload.size),
+  [actions.loading]: (state, payload) => state.update('loading', () => payload.bool),
+  [actions.toggleSearch]: state => state.update('toggleSearch', bool => !bool),
 }, initialState);
 
 export default hackApp;
