@@ -1,17 +1,9 @@
 // @flow
 import axios from 'axios';
 
-import { updateList } from './Actions';
+import { updateList, openComments } from './Actions';
 
 import store from '../Store/Store';
-
-const getItem = id => axios.get(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
-
-const resolve = (promises: Array<Promise<*>>): Promise<*> => (
-  axios.all(promises).then(results => (
-    results.map(result => result.data)
-  ))
-);
 
 const upgradeData = (data: Array<number>) => {
   const pgNum = store.getState().get('pgNum');
@@ -28,22 +20,24 @@ const upgradeData = (data: Array<number>) => {
   }
 
   for (let i = range.min; i < range.max; i += 1) {
-    const currentItemId = data[i];
-    promises.push(getItem(currentItemId));
+    const id = data[i];
+    promises.push(axios.get(`https://hacker-news.firebaseio.com/v0/item/${id}.json`));
   }
 
-  return resolve(promises);
+  return axios.all(promises).then(results => (
+    results.map(result => result.data)
+  ));
 };
 
 export const fetchTab = (tabName: string) => {
   const url = `https://hacker-news.firebaseio.com/v0/${tabName}stories.json`;
   axios.get(url)
        .then(res => upgradeData(res.data))
-       .then(list => updateList('stories', list));
+       .then(list => updateList(list));
 };
 
-export const fetchComments = (kids: Array<number>, type?: string) => {
-  upgradeData(kids).then(list => updateList(type || 'comment', list));
+export const fetchComments = (kids: Array<number>) => {
+  upgradeData(kids).then(list => openComments(list));
 };
 
 export const search = (query: string) => {

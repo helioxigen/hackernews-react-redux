@@ -6,22 +6,25 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Tabs from '../Components/Tabs';
 import List from '../Components/List';
 import Appa from '../Components/AppBar';
-import Comments from './Comments';
+import CommentsDialog from '../Components/CommentsDialog';
 
-import { changeTab, searchMode } from '../Actions/Actions';
-import { fetchList } from '../Actions/fetchActions';
+import { changeTab, searchMode, closeComments } from '../Actions/Actions';
+import { fetchTab } from '../Actions/fetchActions';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    fetchList(props.currentTab);
+    fetchTab(props.currentTab);
   }
   handleTabChange = (tab) => {
     if (this.props.searchMode) {
       searchMode(false);
     }
     changeTab(tab);
-    fetchList(tab);
+    fetchTab(tab);
+  }
+  handleCloseComments() {
+    closeComments();
   }
   render() {
     return (
@@ -32,8 +35,13 @@ class App extends React.Component {
             tab={this.props.currentTab}
             onTabChange={this.handleTabChange}
           />
-          <List list={this.props.list} />
-          <Comments />
+          <List list={this.props.storyList} />
+          {this.props.comments.map(list => (
+            <CommentsDialog
+              list={list}
+              handleClose={this.handleCloseComments}
+            />
+          ))}
         </div>
       </MuiThemeProvider>
     );
@@ -44,7 +52,8 @@ function mapState(state) {
   return {
     currentTab: state.get('currentTab'),
     searchMode: state.get('searchMode'),
-    list: state.get('storyList'),
+    comments: state.get('comments'),
+    storyList: state.get('stories'),
   };
 }
 

@@ -8,13 +8,13 @@ export default class List extends React.PureComponent {
       <div className="list">
         {this.props.list.map(story => (
           <StoryCard
-            key={story.get('id')}
-            id={story.get('id')}
-            kids={story.get('kids')}
-            title={story.get('title')}
-            by={story.get('by')}
-            url={story.get('url')}
-            time={story.get('time')}
+            key={story.id}
+            id={story.id}
+            kids={story.kids}
+            title={story.title}
+            by={story.by}
+            url={story.url}
+            time={story.time}
           />
         ))}
       </div>

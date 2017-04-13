@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 
 import { createReducer } from 'redux-act';
 
@@ -7,15 +7,20 @@ import * as actions from './Actions/Actions';
 
 const initialState = Map({
   currentTab: 'new',
-  pageLength: 6,
-  pageNumber: 1,
+  pgSize: 6,
+  pgNum: 1,
   toggleSearch: false,
   showComments: false,
   searchMode: false,
+  stories: [],
+  comments: List([]),
 });
 
 const hackApp = createReducer({
-  [actions.updateList]: (state, payload) => state.set(payload.type, payload.list),
+  [actions.updateList]: (state, payload) => state.set('stories', payload.list),
+  [actions.openComments]: (state, payload) => state.update('comments', list => (
+    list.push(payload.list)
+  )),
   [actions.searchMode]: (state, payload) => state.merge({
     searchMode: payload.bool,
     currentTab: -1,
@@ -27,7 +32,7 @@ const hackApp = createReducer({
   [actions.changePage]: (state, payload) => state.update('pageNumber', page => parseInt(page, 10) + payload.page),
   [actions.changeSize]: (state, payload) => state.update('pageLength', () => payload.size),
   [actions.toggleSearch]: state => state.update('toggleSearch', bool => !bool),
-  [actions.toggleComments]: state => state.update('showComments', bool => !bool),
+  [actions.closeComments]: state => state.update('comments', list => list.slice(0, -1)),
 }, initialState);
 
 export default hackApp;

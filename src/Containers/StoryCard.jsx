@@ -4,13 +4,11 @@ import moment from 'moment';
 import { Card, CardActions, CardHeader } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
-import { openComments } from '../Actions/Actions';
 import { fetchComments } from '../Actions/fetchActions';
 
 export default class StoryCard extends React.Component {
   handleOpen = () => {
-    openComments(this.props.kids);
-    fetchComments();
+    fetchComments(this.props.kids);
   }
   render() {
     const time = moment.unix(this.props.time).format('Do MMMM YYYY, hh:mm:ss');

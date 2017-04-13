@@ -8,12 +8,12 @@ import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
 import { changeSize } from '../Actions/Actions';
-import { fetchList } from '../Actions/fetchActions';
+import { fetchTab } from '../Actions/fetchActions';
 
 class SettingsMenu extends React.Component {
   handleResize = (e, item) => {
     changeSize(item.props.value);
-    fetchList(this.props.currentTab);
+    fetchTab(this.props.currentTab);
   }
   render() {
     const nestedMenuItems = [{
