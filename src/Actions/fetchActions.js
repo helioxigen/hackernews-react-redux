@@ -1,81 +1,57 @@
+// @flow
 import axios from 'axios';
-import { updateList, updateComments, loading, loadingComments } from './Actions';
+
+import { updateList } from './Actions';
 
 import store from '../Store/Store';
 
-export const upgradeDataWithPagination = (data) => {
-  const pageNumber = store.getState().get('pageNumber');
-  const pageLength = store.getState().get('pageLength');
+const getItem = id => axios.get(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
+
+const resolve = (promises: Array<Promise<*>>): Promise<*> => (
+  axios.all(promises).then(results => (
+    results.map(result => result.data)
+  ))
+);
+
+const upgradeData = (data: Array<number>) => {
+  const pgNum = store.getState().get('pgNum');
+  const pgSize = store.getState().get('pgSize');
   const promises = [];
 
-  const range = {
-    min: (pageNumber - 1) * pageLength,
-    max: pageNumber * pageLength,
+  let range = {
+    min: (pgNum - 1) * pgSize,
+    max: pgNum * pgSize,
   };
 
-  for (let i = range.min; i < range.max; i += 1) {
-    const currentItem = data[i];
-    promises.push(axios.get(`https://hacker-news.firebaseio.com/v0/item/${currentItem}.json`));
+  if (data.length !== 500) { // length of stories
+    range = { min: 0, max: data.length };
   }
 
+  for (let i = range.min; i < range.max; i += 1) {
+    const currentItemId = data[i];
+    promises.push(getItem(currentItemId));
+  }
 
-  axios.all(promises).then(results =>
-    results.map((result) => {
-      const item = result.data;
-      return {
-        by: item.by,
-        descendants: item.descendants,
-        id: item.id,
-        kids: item.kids,
-        score: item.score,
-        time: item.time,
-        title: item.title,
-        type: item.type,
-        url: item.url,
-      };
-    })).then(list => updateList(list))
-       .then(() => loading(false));
+  return resolve(promises);
 };
 
-export const search = (query) => {
+export const fetchTab = (tabName: string) => {
+  const url = `https://hacker-news.firebaseio.com/v0/${tabName}stories.json`;
+  axios.get(url)
+       .then(res => upgradeData(res.data))
+       .then(list => updateList('stories', list));
+};
+
+export const fetchComments = (kids: Array<number>, type?: string) => {
+  upgradeData(kids).then(list => updateList(type || 'comment', list));
+};
+
+export const search = (query: string) => {
   const params = `query=${query}`;
   const url = `http://hn.algolia.com/api/v1/search?${params}`;
 
   axios.get(url)
-       .then(results => results.data.this.map(hit => hit.objectID))
-       .then(results => upgradeDataWithPagination(results));
-};
-
-export const fetchList = (tabName) => {
-  loading(true);
-  return axios.get(`https://hacker-news.firebaseio.com/v0/${tabName}stories.json`)
-              .then(response => response.data)
-              .then(result => upgradeDataWithPagination(result));
-};
-
-export const fetchComments = () => {
-  loadingComments(true);
-  const kids = store.getState().get('storyKids');
-  const promises = [];
-
-  for (let i = 0; i < kids.size; i += 1) {
-    const kid = kids.get(i);
-    promises.push(axios.get(`https://hacker-news.firebaseio.com/v0/item/${kid}.json`));
-  }
-
-  axios.all(promises).then(comments => (
-    comments.map((result) => {
-      const comment = result.data;
-      return {
-        by: comment.by,
-        id: comment.id,
-        kids: comment.kids,
-        parent: comment.parent,
-        text: comment.text,
-        time: comment.time,
-        type: comment.type,
-      };
-    })
-  )).then(commentList => updateComments(commentList))
-    .then(() => loadingComments(false));
+       .then(results => results.data.hits.map(hit => hit.objectID))
+       .then(results => upgradeData(results))
+       .then(list => updateList('search', list));
 };

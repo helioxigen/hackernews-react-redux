@@ -7,7 +7,8 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 
-import { changeSize, fetchList } from '../Actions/Actions';
+import { changeSize } from '../Actions/Actions';
+import { fetchList } from '../Actions/fetchActions';
 
 class SettingsMenu extends React.Component {
   handleResize = (e, item) => {
