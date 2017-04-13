@@ -45,6 +45,7 @@ class SearchBar extends React.Component {
         </IconButton>
         <Popover
           open={this.props.toggleSearch}
+          useLayerForClickAway={false}
           anchorEl={document.getElementsByClassName('searchbutton')[0]}
           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
           targetOrigin={{ horizontal: 'left', vertical: 'top' }}

@@ -38,6 +38,7 @@ class App extends React.Component {
           <List list={this.props.storyList} />
           {this.props.comments.map(list => (
             <CommentsDialog
+              key={list[0].parent}
               list={list}
               handleClose={this.handleCloseComments}
             />
