@@ -6,7 +6,7 @@ import * as actions from '../Actions/Actions';
 
 import hackApp from '../Reducers';
 
-const store = createStore(hackApp, compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+const store = createStore(hackApp, compose(applyMiddleware(thunk)));
 assignAll(actions, store);
 
 export default store;
