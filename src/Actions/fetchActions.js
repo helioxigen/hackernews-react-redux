@@ -1,7 +1,7 @@
 // @flow
 import axios from 'axios';
 
-import { updateList, openComments } from './Actions';
+import { updateList, openComments, loading } from './Actions';
 
 import store from '../Store/Store';
 
@@ -31,9 +31,12 @@ const upgradeData = (data: Array<number>) => {
 
 export const fetchTab = (tabName: string) => {
   const url = `https://hacker-news.firebaseio.com/v0/${tabName}stories.json`;
+
+  loading(true);
   axios.get(url)
        .then(res => upgradeData(res.data))
-       .then(list => updateList(list));
+       .then(list => updateList(list))
+       .then(() => loading(false));
 };
 
 export const fetchComments = (kids: Array<number>) => {
@@ -44,8 +47,10 @@ export const search = (query: string) => {
   const params = `query=${query}`;
   const url = `http://hn.algolia.com/api/v1/search?${params}`;
 
+  loading(true);
   axios.get(url)
        .then(results => results.data.hits.map(hit => hit.objectID))
        .then(results => upgradeData(results))
-       .then(list => updateList('search', list));
+       .then(list => updateList('search', list))
+       .then(() => loading(false));
 };

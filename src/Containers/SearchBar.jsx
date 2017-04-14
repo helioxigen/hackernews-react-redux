@@ -6,7 +6,7 @@ import IconButton from 'material-ui/IconButton';
 import Search from 'material-ui/svg-icons/action/search';
 import Popover from 'material-ui/Popover';
 
-import { toggleSearch, searchMode } from '../Actions/Actions';
+import { toggleSearch, searchMode, changePage } from '../Actions/Actions';
 import { search } from '../Actions/fetchActions';
 
 class SearchBar extends React.Component {
@@ -23,6 +23,7 @@ class SearchBar extends React.Component {
     e.preventDefault();
     toggleSearch();
     searchMode(true);
+    changePage(-(this.props.pgNum - 1));
     search(this.state.searchQuery);
     this.setState({
       searchQuery: '',
@@ -70,6 +71,7 @@ class SearchBar extends React.Component {
 function mapState(state) {
   return {
     toggleSearch: state.get('toggleSearch'),
+    pgNum: state.get('pgNum'),
   };
 }
 

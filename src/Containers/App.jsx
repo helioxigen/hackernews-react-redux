@@ -34,6 +34,7 @@ class App extends React.Component {
           <Tabs
             tab={this.props.currentTab}
             onTabChange={this.handleTabChange}
+            loading={this.props.loading}
           />
           <List list={this.props.storyList} />
           {this.props.comments.map(list => (
@@ -55,6 +56,7 @@ function mapState(state) {
     searchMode: state.get('searchMode'),
     comments: state.get('comments'),
     storyList: state.get('stories'),
+    loading: state.get('loading'),
   };
 }
 

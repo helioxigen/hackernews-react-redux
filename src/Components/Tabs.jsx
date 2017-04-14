@@ -16,7 +16,7 @@ export default class SwitchTabs extends React.PureComponent {
           <Tab label="New" value="new" />
           <Tab label="Ask" value="ask" />
         </Tabs>
-        <Loader />
+        <Loader loading={this.props.loading} />
       </div>
     );
   }
