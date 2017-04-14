@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { amber900 } from 'material-ui/styles/colors';
 
 import Tabs from '../Components/Tabs';
 import List from '../Components/List';
@@ -28,7 +30,7 @@ class App extends React.Component {
   }
   render() {
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={getMuiTheme({ palette: { primary1Color: amber900 } })}>
         <div className="inner">
           <Appa showSearchTitle={this.props.searchMode} />
           <Tabs

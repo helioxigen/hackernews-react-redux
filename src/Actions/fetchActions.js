@@ -32,7 +32,9 @@ const upgradeData = (ids?: Array<*>) => {
 
   for (let i = range.min; i < range.max; i += 1) {
     const id = data[i];
-    promises.push(axios.get(`https://hacker-news.firebaseio.com/v0/item/${id}.json`));
+    if (id) {
+      promises.push(axios.get(`https://hacker-news.firebaseio.com/v0/item/${id}.json`));
+    }
   }
 
   return axios.all(promises).then(results => (
@@ -41,7 +43,11 @@ const upgradeData = (ids?: Array<*>) => {
 };
 
 export const getPage = (pageOp: number) => {
-  changePage(pageOp);
+  const currentPage = store.getState().get('pgNum');
+  const negativePage = currentPage === 1 && pageOp === -1;
+  if (!negativePage) {
+    changePage(pageOp);
+  }
   upgradeData().then(list => updateList(list));
 };
 
