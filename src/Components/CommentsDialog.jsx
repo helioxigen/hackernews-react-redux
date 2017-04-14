@@ -11,7 +11,6 @@ export default class CommentsDialog extends React.PureComponent {
     return (
       <div>
         <Dialog
-          title="Comments"
           modal={false}
           open
           contentStyle={{ width: '90%', maxWidth: 'none' }}

@@ -49,8 +49,8 @@ export const search = (query: string) => {
 
   loading(true);
   axios.get(url)
-       .then(results => results.data.hits.map(hit => hit.objectID))
+       .then(results => results.data.hits.map(hit => parseInt(hit.objectID, 10)))
        .then(results => upgradeData(results))
-       .then(list => updateList('search', list))
+       .then(list => updateList(list))
        .then(() => loading(false));
 };
