@@ -14,11 +14,13 @@ const initialState = Map({
   showComments: false,
   searchMode: false,
   stories: [],
+  cache: [],
   comments: List([]),
 });
 
 const hackApp = createReducer({
   [actions.updateList]: (state, payload) => state.set('stories', payload.list),
+  [actions.cacheIds]: (state, payload) => state.set('cache', payload.ids),
   [actions.openComments]: (state, payload) => state.update('comments', list => (
     list.push(payload.list)
   )),
@@ -31,8 +33,8 @@ const hackApp = createReducer({
     pageNumber: 1,
   }),
   [actions.changePage]: (state, payload) => state.update('pgNum', page => parseInt(page, 10) + payload.page),
-  [actions.changeSize]: (state, payload) => state.update('pgSize', () => payload.size),
-  [actions.loading]: (state, payload) => state.update('loading', () => payload.bool),
+  [actions.changeSize]: (state, payload) => state.set('pgSize', payload.size),
+  [actions.loading]: (state, payload) => state.set('loading', payload.bool),
   [actions.toggleSearch]: state => state.update('toggleSearch', bool => !bool),
   [actions.closeComments]: state => state.update('comments', list => list.slice(0, -1)),
 }, initialState);

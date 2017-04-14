@@ -5,20 +5,17 @@ import IconButton from 'material-ui/IconButton';
 import ArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import ArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 
-import { changePage } from '../Actions/Actions';
-import { fetchTab } from '../Actions/fetchActions';
+import { getPage } from '../Actions/fetchActions';
 
 const buttonStyle = { width: '50px', height: '50px', padding: '12px' };
 const iconStyle = { width: '30px', height: '30px' };
 
 class Pager extends React.Component {
   handleLeftTap = () => {
-    changePage(-1);
-    fetchTab(this.props.currentTab);
+    getPage(-1);
   }
   handleRightTap = () => {
-    changePage(1);
-    fetchTab(this.props.currentTab);
+    getPage(1);
   }
   render() {
     return (

@@ -1,13 +1,24 @@
 // @flow
 import axios from 'axios';
 
-import { updateList, openComments, loading } from './Actions';
+import { updateList, openComments, loading, cacheIds, changePage } from './Actions';
 
 import store from '../Store/Store';
 
-const upgradeData = (data: Array<number>) => {
+const cache = (ids) => {
+  const cachedList = store.getState().get('cache');
+
+  if (ids !== cachedList) {
+    cacheIds(ids);
+  }
+};
+
+const upgradeData = (ids?: Array<*>) => {
   const pgNum = store.getState().get('pgNum');
   const pgSize = store.getState().get('pgSize');
+
+  const data = ids || store.getState().get('cache');
+
   const promises = [];
 
   let range = {
@@ -15,7 +26,7 @@ const upgradeData = (data: Array<number>) => {
     max: pgNum * pgSize,
   };
 
-  if (data.length !== 500) { // length of stories
+  if (typeof ids !== 'undefined') {
     range = { min: 0, max: data.length };
   }
 
@@ -29,12 +40,18 @@ const upgradeData = (data: Array<number>) => {
   ));
 };
 
+export const getPage = (pageOp: number) => {
+  changePage(pageOp);
+  upgradeData().then(list => updateList(list));
+};
+
 export const fetchTab = (tabName: string) => {
   const url = `https://hacker-news.firebaseio.com/v0/${tabName}stories.json`;
 
   loading(true);
   axios.get(url)
-       .then(res => upgradeData(res.data))
+       .then(res => cache(res.data))
+       .then(() => upgradeData())
        .then(list => updateList(list))
        .then(() => loading(false));
 };
@@ -50,7 +67,8 @@ export const search = (query: string) => {
   loading(true);
   axios.get(url)
        .then(results => results.data.hits.map(hit => parseInt(hit.objectID, 10)))
-       .then(results => upgradeData(results))
+       .then(results => cache(results))
+       .then(() => upgradeData())
        .then(list => updateList(list))
        .then(() => loading(false));
 };
