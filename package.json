@@ -38,7 +38,7 @@
     "webpack-dev-server": "^2.4.2"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack --progress --colors",
+    "build": "webpack -p --config webpack.dev.config.js --progress --colors",
     "start": "node ./server.js",
     "dev": "webpack-dev-server"
   }
