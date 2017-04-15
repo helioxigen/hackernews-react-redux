@@ -39,6 +39,7 @@
   },
   "scripts": {
     "build": "webpack -p --progress --colors",
+    "heroku-postbuild": "webpack -p --progress --colors",
     "start": "node ./server.js",
     "dev": "webpack-dev-server"
   }
