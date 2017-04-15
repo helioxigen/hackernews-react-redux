@@ -1,7 +1,8 @@
 // @flow
 import axios from 'axios';
 
-import { updateList, openComments, loading, cacheIds, changePage } from './Actions';
+import { updateList, openComments, loading,
+         cacheIds, changePage } from './Actions';
 
 import store from '../Store/Store';
 
@@ -13,7 +14,7 @@ const cache = (ids) => {
   }
 };
 
-const upgradeData = (ids?: Array<*>) => {
+const upgradeData = (ids?: Array<number>) => {
   const pgNum = store.getState().get('pgNum');
   const pgSize = store.getState().get('pgSize');
 
@@ -46,9 +47,10 @@ export const getPage = (pageOp: number) => {
   const currentPage = store.getState().get('pgNum');
   const negativePage = currentPage === 1 && pageOp === -1;
   if (!negativePage) {
+    loading(true);
     changePage(pageOp);
+    upgradeData().then(list => updateList(list)).then(() => loading(false));
   }
-  upgradeData().then(list => updateList(list));
 };
 
 export const fetchTab = (tabName: string) => {
@@ -57,7 +59,7 @@ export const fetchTab = (tabName: string) => {
   loading(true);
   axios.get(url)
        .then(res => cache(res.data))
-       .then(() => upgradeData())
+       .then(upgradeData)
        .then(list => updateList(list))
        .then(() => loading(false));
 };
@@ -67,14 +69,14 @@ export const fetchComments = (kids: Array<number>) => {
 };
 
 export const search = (query: string) => {
-  const params = `query=${query}`;
+  const params = `query=${query}&hitsPerPage=100`;
   const url = `http://hn.algolia.com/api/v1/search?${params}`;
 
   loading(true);
   axios.get(url)
        .then(results => results.data.hits.map(hit => parseInt(hit.objectID, 10)))
        .then(results => cache(results))
-       .then(() => upgradeData())
+       .then(upgradeData)
        .then(list => updateList(list))
        .then(() => loading(false));
 };
