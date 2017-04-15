@@ -1,6 +1,7 @@
 var path = require('path');
 var autoprefixer = require('autoprefixer');
 var webpack = require('webpack');
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -15,11 +16,15 @@ module.exports = {
         test: /\.jsx?/,
         include: [ path.resolve(__dirname, 'src') ],
         exclude: /(node_modules)/,
-        loader: 'babel-loader',
-        options: {
-          presets: ['stage-0', 'react', 'flow'],
-          cacheDirectory: true
-        },
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['stage-0', 'react', 'flow'],
+              cacheDirectory: true
+            },
+          }
+        ]
       },
       {
         test: /\.css?/,
@@ -66,8 +71,7 @@ module.exports = {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: false,
+    new UglifyJsPlugin({
       mangle: {
         screw_ie8: true,
         keep_fnames: true
@@ -79,7 +83,7 @@ module.exports = {
       comments: false
     }),
   ],
-  devtool: "cheap-module-source-map",
+  // devtool: "source-map",
   devServer: {
     contentBase: path.join(__dirname, 'public'),
     port: 3000
