@@ -1,5 +1,6 @@
 var path = require('path');
 var autoprefixer = require('autoprefixer');
+var webpack = require('webpack');
 
 module.exports = {
   entry: './src/index.js',
@@ -55,7 +56,30 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
-  devtool: "cheap-eval-source-map",
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      mangle: {
+        screw_ie8: true,
+        keep_fnames: true
+      },
+      compress: {
+        screw_ie8: true
+      },
+      sourceMap: true,
+      comments: false
+    }),
+  ],
+  devtool: "cheap-module-source-map",
   devServer: {
     contentBase: path.join(__dirname, 'public'),
     port: 3000
