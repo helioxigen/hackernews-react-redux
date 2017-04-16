@@ -13,7 +13,7 @@ export default class CommentsDialog extends React.PureComponent {
         <Dialog
           modal={false}
           open
-          contentStyle={{ width: '90%', maxWidth: 'none' }}
+          contentStyle={{ width: screen.width < 720 ? '100%' : '90%', maxWidth: 'none' }}
           onRequestClose={this.props.handleClose}
           autoScrollBodyContent
         >

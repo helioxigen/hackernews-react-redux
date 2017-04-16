@@ -11,6 +11,7 @@ export default class SwitchTabs extends React.PureComponent {
           className="tabs"
           value={this.props.tab}
           onChange={this.props.onTabChange}
+          inkBarStyle={{ 'background-color': '#0090FF' }}
         >
           <Tab label="Top" value="top" />
           <Tab label="New" value="new" />

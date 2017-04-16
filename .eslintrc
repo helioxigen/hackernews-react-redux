@@ -4,6 +4,7 @@
   "globals": {
     "document": true,
     "window": true,
+    "screen": true,
   },
   "plugins": [
     "react"

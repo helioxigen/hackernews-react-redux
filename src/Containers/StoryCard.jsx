@@ -20,7 +20,7 @@ export default class StoryCard extends React.Component {
           subtitle={`${this.props.by} / ${time}`}
         />
         <CardActions>
-          {this.props.url ? <FlatButton label="Go To URL" href={this.props.url} /> : ''}
+          {this.props.url && <FlatButton label="Go To URL" target="_blank" href={this.props.url} />}
           {this.props.kids ?
             <FlatButton
               label={this.props.url ? 'Show Comments' : 'Show Answers'}
