@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 import { updateList, openComments, loading,
-         cacheIds, changePage } from './Actions';
+         cacheIds, changePage, throwError } from './Actions';
 
 import store from '../Store/Store';
 
@@ -38,9 +38,11 @@ const upgradeData = (ids?: Array<number>) => {
     }
   }
 
-  return axios.all(promises).then(results => (
-    results.map(result => result.data)
-  ));
+  return axios.all(promises)
+    .catch(() => throwError('Connection Error'))
+    .then(results => (
+      results.map(result => result.data)
+    ));
 };
 
 export const getPage = (pageOp: number) => {
@@ -58,6 +60,7 @@ export const fetchTab = (tabName: string) => {
 
   loading(true);
   axios.get(url)
+       .catch(() => throwError('Connection Error'))
        .then(res => cache(res.data))
        .then(upgradeData)
        .then(list => updateList(list))
@@ -74,6 +77,7 @@ export const search = (query: string) => {
 
   loading(true);
   axios.get(url)
+       .catch(() => throwError('Connection Error'))
        .then(results => results.data.hits.map(hit => parseInt(hit.objectID, 10)))
        .then(results => cache(results))
        .then(upgradeData)

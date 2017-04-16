@@ -16,6 +16,7 @@ const initialState = Map({
   stories: [],
   cache: [],
   comments: List([]),
+  error: false,
 });
 
 const hackApp = createReducer({
@@ -35,6 +36,7 @@ const hackApp = createReducer({
   [actions.changePage]: (state, payload) => state.update('pgNum', page => parseInt(page, 10) + payload.page),
   [actions.changeSize]: (state, payload) => state.set('pgSize', payload.size),
   [actions.loading]: (state, payload) => state.set('loading', payload.bool),
+  [actions.throwError]: (state, payload) => state.set('error', payload.errorMsg),
   [actions.closeComments]: state => state.update('comments', list => list.slice(0, -1)),
 }, initialState);
 

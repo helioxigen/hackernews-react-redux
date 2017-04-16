@@ -9,8 +9,9 @@ import Tabs from '../Components/Tabs';
 import List from '../Components/List';
 import Appa from '../Components/AppBar';
 import CommentsDialog from '../Components/CommentsDialog';
+import Errorbar from '../Components/Errorbar';
 
-import { changeTab, searchMode, closeComments } from '../Actions/Actions';
+import { changeTab, searchMode, closeComments, throwError } from '../Actions/Actions';
 import { fetchTab } from '../Actions/fetchActions';
 
 class App extends React.Component {
@@ -27,6 +28,9 @@ class App extends React.Component {
   }
   handleCloseComments() {
     closeComments();
+  }
+  throwEmptyError() {
+    throwError(false);
   }
   render() {
     return (
@@ -46,6 +50,10 @@ class App extends React.Component {
               handleClose={this.handleCloseComments}
             />
           ))}
+          <Errorbar
+            message={this.props.errorMsg}
+            onHide={this.throwEmptyError}
+          />
         </div>
       </MuiThemeProvider>
     );
@@ -59,6 +67,7 @@ function mapState(state) {
     comments: state.get('comments'),
     storyList: state.get('stories'),
     loading: state.get('loading'),
+    errorMsg: state.get('error'),
   };
 }
 

@@ -1,7 +1,7 @@
 import { createAction } from 'redux-act';
 
 export const updateList = createAction('Update list', list => ({ list }));
-export const error = createAction('Error', errorMsg => ({ errorMsg }));
+export const throwError = createAction('Error', errorMsg => ({ errorMsg }));
 export const cacheIds = createAction('Caching Item Ids', ids => ({ ids }));
 export const openComments = createAction('Open Comments', list => ({ list }));
 export const changeTab = createAction('Change Tab', tab => ({ tab }));
