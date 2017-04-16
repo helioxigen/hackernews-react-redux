@@ -6,7 +6,7 @@ import IconButton from 'material-ui/IconButton';
 import Search from 'material-ui/svg-icons/action/search';
 import Popover from 'material-ui/Popover';
 
-import { toggleSearch, searchMode, changePage } from '../Actions/Actions';
+import { searchMode, changePage } from '../Actions/Actions';
 import { search } from '../Actions/fetchActions';
 
 class SearchBar extends React.Component {
@@ -14,14 +14,18 @@ class SearchBar extends React.Component {
     super();
     this.state = {
       searchQuery: '',
+      showSearch: false,
     };
   }
-  handleSearch() {
-    toggleSearch();
+  toggleSearch = (event) => {
+    event.preventDefault();
+    this.setState({
+      showSearch: true,
+    });
   }
   handleSearchQuery = (e) => {
     e.preventDefault();
-    toggleSearch();
+    this.handlePopoverClose();
     searchMode(true);
     changePage(-(this.props.pgNum - 1));
     search(this.state.searchQuery);
@@ -34,24 +38,29 @@ class SearchBar extends React.Component {
       searchQuery: event.target.value,
     });
   }
+  handlePopoverClose = () => {
+    this.setState({
+      showSearch: false,
+    });
+  }
   render() {
     return (
       <div>
         <IconButton
           className="searchbutton"
           iconStyle={{ color: 'white' }}
-          onTouchTap={this.handleSearch}
+          onTouchTap={this.toggleSearch}
         >
           <Search />
         </IconButton>
         <Popover
-          open={this.props.toggleSearch}
+          open={this.state.showSearch}
           useLayerForClickAway={screen.width < 720}
           anchorEl={document.getElementsByClassName('searchbutton')[0]}
           anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
           targetOrigin={{ horizontal: 'left', vertical: 'top' }}
           style={{ padding: '0px 10px 0px 10px' }}
-          onRequestClose={this.handleSearch}
+          onRequestClose={this.handlePopoverClose}
         >
           <form onSubmit={this.handleSearchQuery}>
             <TextField
@@ -70,7 +79,6 @@ class SearchBar extends React.Component {
 
 function mapState(state) {
   return {
-    toggleSearch: state.get('toggleSearch'),
     pgNum: state.get('pgNum'),
   };
 }

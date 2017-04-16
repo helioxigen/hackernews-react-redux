@@ -23,7 +23,7 @@ export default class CommentCard extends React.Component {
           <CardActions>
             <FlatButton
               label="Show Answers"
-              onClick={this.handleOpen}
+              onTouchTap={this.handleOpen}
             />
           </CardActions>
         }

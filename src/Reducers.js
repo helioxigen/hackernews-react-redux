@@ -35,7 +35,6 @@ const hackApp = createReducer({
   [actions.changePage]: (state, payload) => state.update('pgNum', page => parseInt(page, 10) + payload.page),
   [actions.changeSize]: (state, payload) => state.set('pgSize', payload.size),
   [actions.loading]: (state, payload) => state.set('loading', payload.bool),
-  [actions.toggleSearch]: state => state.update('toggleSearch', bool => !bool),
   [actions.closeComments]: state => state.update('comments', list => list.slice(0, -1)),
 }, initialState);
 

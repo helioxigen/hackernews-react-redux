@@ -24,7 +24,7 @@ export default class StoryCard extends React.Component {
           {this.props.kids ?
             <FlatButton
               label={this.props.url ? 'Show Comments' : 'Show Answers'}
-              onClick={this.handleOpen}
+              onTouchTap={this.handleOpen}
             />
           :
             <FlatButton disabled label={this.props.url ? 'No Comments' : 'No Answers'} />}
