@@ -8,6 +8,7 @@ class DynamicTitle extends React.PureComponent {
     return (
       <div>
         <span className="apptitle">HAXXXZOR NEWS</span>
+        <span className="apptitleshort">HN</span>
         <span
           className="searchtitle"
           style={{ display: this.props.searchMode ? 'inline-block' : 'none' }}

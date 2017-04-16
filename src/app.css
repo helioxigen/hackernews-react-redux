@@ -80,9 +80,17 @@
   top: 3px;
   left: 140px;
 }
+.apptitleshort{
+  display: none;
+}
 
 @media (max-width: 408px) {
   .apptitle{
     display: none;
+  }
+  .apptitleshort{
+    display: inline;
+    padding: 2px;
+    border: 2px solid white;
   }
 }
