@@ -8,7 +8,7 @@ import ArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 import { getPage } from '../Actions/fetchActions';
 
 const buttonStyle = { width: '50px', height: '50px', padding: '12px' };
-const iconStyle = { width: '30px', height: '30px' };
+const iconStyle = { width: '30px', height: '30px', color: 'white' };
 
 class Pager extends React.Component {
   handleLeftTap = () => {
