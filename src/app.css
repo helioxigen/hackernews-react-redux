@@ -84,6 +84,13 @@
   display: none;
 }
 
+.count{
+  position: absolute;
+  top: 15px;
+  font-size: 0.8em;
+  right: 9px;
+}
+
 @media (max-width: 408px) {
   .apptitle{
     display: none;

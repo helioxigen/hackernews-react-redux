@@ -12,13 +12,21 @@ export default class StoryCard extends React.Component {
   }
   render() {
     const time = moment.unix(this.props.time).format('Do MMMM YYYY, hh:mm:ss');
+    const answer = this.props.count === 1 ? 'answer' : 'answers';
+    const comment = this.props.count === 1 ? 'comment' : 'comments';
+    const countType = this.props.url ? comment : answer;
+    const count = `${this.props.count} ${countType}`;
     return (
       <Card className="storycard">
         <CardHeader
           className="title"
           title={this.props.title}
           subtitle={`${this.props.by} / ${time}`}
-        />
+        >
+          <div className="count">
+            {!!this.props.count && count}
+          </div>
+        </CardHeader>
         <CardActions>
           {this.props.url && <FlatButton label="Go To URL" target="_blank" href={this.props.url} />}
           {this.props.kids ?

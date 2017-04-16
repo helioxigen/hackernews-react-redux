@@ -10,6 +10,7 @@ export default class List extends React.PureComponent {
           <StoryCard
             key={story.id}
             id={story.id}
+            count={story.descendants}
             kids={story.kids}
             title={story.title}
             by={story.by}
