@@ -14,27 +14,27 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?/,
-        include: [ path.resolve(__dirname, 'src') ],
+        include: [path.resolve(__dirname, 'src')],
         exclude: /(node_modules)/,
         use: [
           {
             loader: 'babel-loader',
             options: {
               presets: ['stage-0', 'react', 'flow'],
-              cacheDirectory: true
+              cacheDirectory: true,
             },
-          }
-        ]
+          },
+        ],
       },
       {
         test: /\.css?/,
-        include: [ path.resolve(__dirname, 'src') ],
+        include: [path.resolve(__dirname, 'src')],
         exclude: /(node_modules)/,
         use: [
           'style-loader',
           {
             loader: 'css-loader',
-            options:{
+            options: {
               importLoaders: 1,
             },
           },
@@ -49,43 +49,38 @@ module.exports = {
                     'last 4 versions',
                     'Firefox ESR',
                     'not ie < 9',
-                  ]
-                })
+                  ],
+                }),
               ],
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
-    ]
+    ],
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   },
   plugins: [
     new webpack.LoaderOptionsPlugin({
       minimize: true,
-      debug: false
+      debug: false,
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
+        NODE_ENV: JSON.stringify('production'),
+      },
     }),
     new UglifyJsPlugin({
       mangle: {
         screw_ie8: true,
-        keep_fnames: true
+        keep_fnames: true,
       },
       compress: {
-        screw_ie8: true
+        screw_ie8: true,
       },
       sourceMap: true,
-      comments: false
+      comments: false,
     }),
   ],
-  // devtool: "source-map",
-  devServer: {
-    contentBase: path.join(__dirname, 'public'),
-    port: 3000
-  }
-}
+};

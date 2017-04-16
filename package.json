@@ -40,8 +40,8 @@
     "webpack-dev-server": "^2.4.2"
   },
   "scripts": {
-    "build": "webpack --progress --colors",
+    "build": "webpack --config webpack.prod.config.js --progress --colors",
     "start": "node ./server.js",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server --config webpack.dev.config.js"
   }
 }

@@ -80,3 +80,9 @@
   top: 3px;
   left: 140px;
 }
+
+@media (max-width: 408px) {
+  .apptitle{
+    display: none;
+  }
+}

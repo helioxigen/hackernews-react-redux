@@ -26,6 +26,7 @@ export default class CommentsDialog extends React.PureComponent {
             <CircularProgress size={70} thickness={5} />
           </div>
           {this.props.list.map(comment =>
+            comment.by &&
             <CommentCard
               key={comment.id}
               by={comment.by}
