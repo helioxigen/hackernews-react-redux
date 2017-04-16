@@ -33,7 +33,7 @@
 }
 
 .loaded{
-  display: none;
+  display: none!important;
 }
 
 .commentTitle{
@@ -75,11 +75,6 @@
   margin-bottom: 10px;
 }
 
-.loading-comments{
-  position: absolute;
-  top: 3px;
-  left: 140px;
-}
 .apptitleshort{
   display: none;
 }
@@ -91,7 +86,7 @@
   right: 9px;
 }
 
-@media (max-width: 408px) {
+@media (max-width: 500px) {
   .apptitle{
     display: none;
   }

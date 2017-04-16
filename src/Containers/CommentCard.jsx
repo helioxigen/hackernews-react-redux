@@ -12,6 +12,7 @@ export default class CommentCard extends React.Component {
   }
   render() {
     const time = moment.unix(this.props.time).format('Do MMMM YYYY, hh:mm:ss');
+    const answersActionLabel = !!this.props.kids && `Show Answers (${this.props.kids.length})`;
     return (
       <Card className="commentCard">
         <CardHeader
@@ -22,7 +23,7 @@ export default class CommentCard extends React.Component {
         {this.props.kids &&
           <CardActions>
             <FlatButton
-              label="Show Answers"
+              label={answersActionLabel}
               onTouchTap={this.handleOpen}
             />
           </CardActions>
